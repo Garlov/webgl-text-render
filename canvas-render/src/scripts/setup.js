@@ -2,7 +2,7 @@ import * as PIXI from 'pixi.js';
 
 export default function setup() {
     const rendererOptions = {
-        backgroundColor: 0xdddddd,
+        backgroundColor: 0xffffff,
         interactive: true,
         antialias: true,
         preserveDrawingBuffer: true // Needed to capture canvas
