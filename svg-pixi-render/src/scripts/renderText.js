@@ -19,13 +19,17 @@ export default function renderText() {
 
                 console.log(`%c TEXT LENGTH: ${text.length} CHARACTERS`, 'background: red; color: white');
                 console.time('drawing text');
+
                 //char position data
                 let lineHeight = 10;
                 let currLine = 1;
                 let charOnLine = 0;
                 let charSize = 10;
+
+                //timers
                 let getPathTime = 0;
                 let toPathDataTime = 0;
+                let totalSvgGenerationTime = performance.now();
 
                 //loop over chars and draw them
                 for (let i = 0; i < text.length; i++) {
@@ -60,8 +64,12 @@ export default function renderText() {
                         charOnLine = 0;
                     }
                 }
-                console.log(`%c GET PATH TIME: ${getPathTime}MS`, 'background: blue; color: white');
-                console.log(`%c TO PATH DATA TIME: ${toPathDataTime}MS`, 'background: blue; color: white');
+
+                //console log timers in ms and percent
+                totalSvgGenerationTime = performance.now() - totalSvgGenerationTime;
+                console.log(`%c TOTAL TIME: ${totalSvgGenerationTime} MS`, 'background: blue; color: white');
+                console.log(`%c GET PATH TIME: ${getPathTime} MS, ${parseInt(getPathTime/totalSvgGenerationTime*100)}% OF TOTAL TIME`, 'background: blue; color: white');
+                console.log(`%c TO PATH DATA TIME: ${toPathDataTime} MS, ${parseInt(toPathDataTime/totalSvgGenerationTime*100)}% OF TOTAL TIME`, 'background: blue; color: white');
 
                 resolve(svg);
             }
