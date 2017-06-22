@@ -1,8 +1,8 @@
 {
-  "name": "webtop.editor",
+  "name": "canvas-renderer",
   "version": "1.0.0",
-  "description": "Webtop Editor",
-  "author": "Webtop Solutions",
+  "description": "render text to canvas using opentype and pixi.js",
+  "author": "Garlov",
   "dependencies": {
     "browser-sync": "^2.17.5",
     "browserify": "^13.1.1",
