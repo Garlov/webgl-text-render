@@ -26,11 +26,14 @@ export default function renderText() {
                 //loop over chars and draw them
                 for (let i = 0; i < text.length; i++) {
                     let c = text[i];
+
                     //get path from opentype
                     let charPath = font.getPath(c, 0, 0, 10);
+
                     //calculate x and y
                     let x = charOnLine * charSize;
                     let y = currLine * lineHeight;
+                    
                     //draw character at x and y
                     ctx.save();
                     ctx.translate(x, y);
@@ -45,7 +48,7 @@ export default function renderText() {
                         charOnLine = 0;
                     }
                 }
-                //return canvas
+
                 resolve(canvas);
             }
         });
