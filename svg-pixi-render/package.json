@@ -1,0 +1,30 @@
+{
+  "name": "svg-pixi-renderer",
+  "version": "1.0.0",
+  "description": "create svg path from text using opentype and then render svg to pixi.js",
+  "author": "Garlov",
+  "dependencies": {
+    "browser-sync": "^2.17.5",
+    "browserify": "^13.1.1",
+    "opentype.js": "^0.6.9",
+    "lodash.assign": "^4.2.0",
+    "lodash.throttle": "^4.1.1",
+    "pixi.js": "4.5.1"
+  },
+  "devDependencies": {
+    "babel-preset-es2015": "^6.14.0",
+    "babel-plugin-transform-object-rest-spread": "^6.23.0",
+    "babelify": "^7.3.0",
+    "del": "^2.2.2",
+    "gulp": "^3.9.1",
+    "gulp-bump": "^2.7.0",
+    "gulp-plumber": "^1.1.0",
+    "gulp-sourcemaps": "^2.2.0",
+    "gulp-uglify": "^2.0.0",
+    "gulp-util": "^3.0.7",
+    "stream-combiner": "^0.2.2",
+    "vinyl-buffer": "^1.0.0",
+    "vinyl-source-stream": "^1.1.0",
+    "watchify": "^3.7.0"
+  }
+}
