@@ -1,7 +1,7 @@
 import text from './text';
 import opentype from 'opentype.js';
 
-export default function renderText() {
+export default function renderText2() {
     return new Promise((resolve, reject) => {
         opentype.load('media/CaeciliaLTStd-Bold.otf', function (err, font) {
             if (err) {
@@ -29,13 +29,17 @@ export default function renderText() {
                 let drawOnCanvasTime = 0;
                 let totalDrawTime = performance.now();
 
+                let notdef = font.glyphs.get(0);
+
                 //loop over chars and draw them
                 for (let i = 0; i < text.length; i++) {
                     let c = text[i];
 
                     //get path from opentype
                     let t0 = performance.now();
-                    let charPath = font.getPath(c, 0, 0, 10);
+                    let glyphIndex = font.charToGlyphIndex(c);
+                    let glyph = font.glyphs.get(glyphIndex) || notdef;
+                    let charPath = glyph.getPath(0, 0, 10);
                     let t1 = performance.now();
                     getPathTime += (t1 - t0);
 

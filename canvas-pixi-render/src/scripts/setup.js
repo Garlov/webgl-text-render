@@ -9,7 +9,7 @@ export default function setup() {
     }
 
     //init pixi
-    let renderer = new PIXI.WebGLRenderer(window.innerWidth, window.innerHeight, rendererOptions);
+    let renderer = new PIXI.WebGLRenderer(window.innerWidth - 100, window.innerHeight, rendererOptions);
 
     //get content div
     let contentDiv = document.getElementById('content');
@@ -17,6 +17,9 @@ export default function setup() {
     //add pixi canvas to content div
     contentDiv.appendChild(renderer.view);
     renderer.view.style.userSelect = 'none';
+    renderer.view.style.position = 'absolute';
+    renderer.view.style.top = '0px';
+    renderer.view.style.left = '100px';
 
     //create stage container for content
     let stage = new PIXI.Container();
