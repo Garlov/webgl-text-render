@@ -29,6 +29,7 @@ export default function renderText() {
                 //timers
                 let getPathTime = 0;
                 let toPathDataTime = 0;
+                let createPathTime = 0;
                 let totalSvgGenerationTime = performance.now();
 
                 //loop over chars and draw them
@@ -50,11 +51,14 @@ export default function renderText() {
                     let x = charOnLine * charSize;
                     let y = currLine * lineHeight;
 
+                    t0 = performance.now();
                     let svgPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
                     svgPath.setAttribute('transform', `translate(${x}, ${y})`);
                     svgPath.setAttribute('d', svgPathData);
                     svgPath.setAttribute('fill', 'black');
                     svg.appendChild(svgPath);
+                    t1 = performance.now();
+                    createPathTime += (t1 - t0);
 
                     charOnLine += 1;
 
@@ -70,6 +74,7 @@ export default function renderText() {
                 console.log(`%c TOTAL TIME: ${totalSvgGenerationTime} MS`, 'background: blue; color: white');
                 console.log(`%c GET PATH TIME: ${getPathTime} MS, ${parseInt(getPathTime/totalSvgGenerationTime*100)}% OF TOTAL TIME`, 'background: blue; color: white');
                 console.log(`%c TO PATH DATA TIME: ${toPathDataTime} MS, ${parseInt(toPathDataTime/totalSvgGenerationTime*100)}% OF TOTAL TIME`, 'background: blue; color: white');
+                console.log(`%c CREATE PATH TIME: ${createPathTime} MS, ${parseInt(createPathTime/totalSvgGenerationTime*100)}% OF TOTAL TIME`, 'background: blue; color: white');
 
                 resolve(svg);
             }
