@@ -16,8 +16,20 @@ export default function createRenderButtons() {
     directRenderButton.innerText = 'Direct Render';
     directRenderButton.style.width = '100%';
 
+    let cacheRenderButton = document.createElement('button');
+    cacheRenderButton.setAttribute('id', 'cache-render');
+    cacheRenderButton.innerText = 'Cache Render';
+    cacheRenderButton.style.width = '100%';
+
+    let drawRenderButton = document.createElement('button');
+    drawRenderButton.setAttribute('id', 'draw-render');
+    drawRenderButton.innerText = 'Draw Render';
+    drawRenderButton.style.width = '100%';
+
     buttonContainer.appendChild(normalRenderButton);
     buttonContainer.appendChild(directRenderButton);
+    buttonContainer.appendChild(cacheRenderButton);
+    buttonContainer.appendChild(drawRenderButton);
 
     document.body.appendChild(buttonContainer);
 }

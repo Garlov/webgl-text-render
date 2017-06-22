@@ -3,6 +3,8 @@ import setup from './scripts/setup';
 import createRenderButtons from './scripts/createRenderButtons';
 import renderText from './scripts/renderText';
 import renderText2 from './scripts/renderText2';
+import renderText3 from './scripts/renderText3';
+import renderText4 from './scripts/renderText4';
 
 let state = undefined;
 
@@ -40,6 +42,24 @@ rdy(function () {
 	let directRender = document.getElementById('direct-render');
 	directRender.addEventListener('mouseup', () => {
 		renderText2().then((textCanvas) => {
+			let texture = new PIXI.Texture.fromCanvas(textCanvas);
+			sprite.texture = texture;
+			console.timeEnd('drawing text');
+		});
+	});
+
+	let cacheRender = document.getElementById('cache-render');
+	cacheRender.addEventListener('mouseup', () => {
+		renderText3().then((textCanvas) => {
+			let texture = new PIXI.Texture.fromCanvas(textCanvas);
+			sprite.texture = texture;
+			console.timeEnd('drawing text');
+		});
+	});
+
+	let drawRender = document.getElementById('draw-render');
+	drawRender.addEventListener('mouseup', () => {
+		renderText4().then((textCanvas) => {
 			let texture = new PIXI.Texture.fromCanvas(textCanvas);
 			sprite.texture = texture;
 			console.timeEnd('drawing text');
