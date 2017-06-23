@@ -1,7 +1,7 @@
 import text from './text';
 import opentype from 'opentype.js';
 
-let glyphPathCache = new Map();
+let glyphPathCache = {};
 
 export default function renderText3() {
     return new Promise((resolve, reject) => {
@@ -40,11 +40,11 @@ export default function renderText3() {
                     //get path from opentype
                     let t0 = performance.now();
                     let glyphIndex = font.charToGlyphIndex(c);
-                    let charPath = glyphPathCache.get(glyphIndex);
+                    let charPath = glyphPathCache[glyphIndex];
                     if (!charPath) {
                         let glyph = font.glyphs.get(glyphIndex) || notdef;
                         charPath = glyph.getPath(0, 0, 10);
-                        glyphPathCache.set(glyphIndex, charPath);
+                        glyphPathCache[glyphIndex] = charPath;
                     }
                     let t1 = performance.now();
                     getPathTime += (t1 - t0);

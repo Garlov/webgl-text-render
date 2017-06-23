@@ -1,7 +1,7 @@
 import text from './text';
 import opentype from 'opentype.js';
 
-let glyphCommandCache = new Map();
+let glyphCommandCache = {};
 
 const draw = (x, y, fontSize, unitsPerEm, commands, ctx) => {
     x = x !== undefined ? x : 0;
@@ -70,7 +70,7 @@ export default function renderText4() {
                     //get path from opentype
                     let t0 = performance.now();
                     let glyphIndex = font.charToGlyphIndex(c);
-                    let glyphCommands = glyphCommandCache.get(glyphIndex);
+                    let glyphCommands = glyphCommandCache[glyphIndex];
                     if (!glyphCommands) {
                         let glyph = font.glyphs.get(glyphIndex) || notdef;
                         glyphCommands = glyph.path.commands;
@@ -88,7 +88,7 @@ export default function renderText4() {
                                 c.type = 4;
                             }
                         }
-                        glyphCommandCache.set(glyphIndex, glyphCommands);
+                        glyphCommandCache[glyphIndex] = glyphCommands;
                     }
                     let t1 = performance.now();
                     getPathTime += (t1 - t0);
