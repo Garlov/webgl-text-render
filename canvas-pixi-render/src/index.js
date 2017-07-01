@@ -5,8 +5,15 @@ import renderText from './scripts/renderText';
 import renderText2 from './scripts/renderText2';
 import renderText3 from './scripts/renderText3';
 import renderText4 from './scripts/renderText4';
+import renderText5 from './scripts/renderText5';
+import Promise from 'promise-polyfill';
+//import 'canvas-5-polyfill';
+import 'ctx-polyfill';
 
 let state = undefined;
+if (!window.Promise) {
+	window.Promise = Promise;
+}
 
 const rdy = (fn) => {
 	if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
@@ -60,6 +67,15 @@ rdy(function () {
 	let drawRender = document.getElementById('draw-render');
 	drawRender.addEventListener('mouseup', () => {
 		renderText4().then((textCanvas) => {
+			let texture = new PIXI.Texture.fromCanvas(textCanvas);
+			sprite.texture = texture;
+			console.timeEnd('drawing text');
+		});
+	});
+
+	let pathRender = document.getElementById('path-render');
+	pathRender.addEventListener('mouseup', () => {
+		renderText5().then((textCanvas) => {
 			let texture = new PIXI.Texture.fromCanvas(textCanvas);
 			sprite.texture = texture;
 			console.timeEnd('drawing text');

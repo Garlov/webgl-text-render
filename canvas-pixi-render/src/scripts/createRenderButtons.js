@@ -26,10 +26,16 @@ export default function createRenderButtons() {
     drawRenderButton.innerText = 'Draw Render';
     drawRenderButton.style.width = '100%';
 
+    let pathRenderButton = document.createElement('button');
+    pathRenderButton.setAttribute('id', 'path-render');
+    pathRenderButton.innerText = 'Path Render';
+    pathRenderButton.style.width = '100%';
+
     buttonContainer.appendChild(normalRenderButton);
     buttonContainer.appendChild(directRenderButton);
     buttonContainer.appendChild(cacheRenderButton);
     buttonContainer.appendChild(drawRenderButton);
+    buttonContainer.appendChild(pathRenderButton);
 
     document.body.appendChild(buttonContainer);
 }
