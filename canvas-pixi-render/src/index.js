@@ -23,9 +23,18 @@ const rdy = (fn) => {
 	}
 }
 
-const animate = () => {
-	state.renderer.render(state.stage);
-	requestAnimationFrame(animate);
+// const animate = () => {
+// 	state.renderer.render(state.stage);
+// 	requestAnimationFrame(animate);
+// }
+
+const getFontSize = () => {
+	let fontSizeElem = document.getElementById('fontSize');
+	let fontSize = 10;
+	if (fontSizeElem.value.length > 0) {
+		fontSize = parseFloat(fontSizeElem.value);
+	}
+	return fontSize;
 }
 
 rdy(function () {
@@ -37,39 +46,40 @@ rdy(function () {
 
 	createRenderButtons();
 
-	let normalRender = document.getElementById('normal-render');
-	normalRender.addEventListener('mouseup', () => {
-		renderText().then((textCanvas) => {
-			let texture = new PIXI.Texture.fromCanvas(textCanvas);
-			sprite.texture = texture;
-			console.timeEnd('drawing text');
-			state.renderer.render(state.stage);
-		});
-	});
+	// let normalRender = document.getElementById('normal-render');
+	// normalRender.addEventListener('mouseup', () => {
+	// 	renderText().then((textCanvas) => {
+	// 		let texture = new PIXI.Texture.fromCanvas(textCanvas);
+	// 		sprite.texture = texture;
+	// 		console.timeEnd('drawing text');
+	// 		state.renderer.render(state.stage);
+	// 	});
+	// });
 
-	let directRender = document.getElementById('direct-render');
-	directRender.addEventListener('mouseup', () => {
-		renderText2().then((textCanvas) => {
-			let texture = new PIXI.Texture.fromCanvas(textCanvas);
-			sprite.texture = texture;
-			console.timeEnd('drawing text');
-			state.renderer.render(state.stage);
-		});
-	});
+	// let directRender = document.getElementById('direct-render');
+	// directRender.addEventListener('mouseup', () => {
+	// 	renderText2().then((textCanvas) => {
+	// 		let texture = new PIXI.Texture.fromCanvas(textCanvas);
+	// 		sprite.texture = texture;
+	// 		console.timeEnd('drawing text');
+	// 		state.renderer.render(state.stage);
+	// 	});
+	// });
 
-	let cacheRender = document.getElementById('cache-render');
-	cacheRender.addEventListener('mouseup', () => {
-		renderText3().then((textCanvas) => {
-			let texture = new PIXI.Texture.fromCanvas(textCanvas);
-			sprite.texture = texture;
-			console.timeEnd('drawing text');
-			state.renderer.render(state.stage);
-		});
-	});
+	// let cacheRender = document.getElementById('cache-render');
+	// cacheRender.addEventListener('mouseup', () => {
+	// 	renderText3().then((textCanvas) => {
+	// 		let texture = new PIXI.Texture.fromCanvas(textCanvas);
+	// 		sprite.texture = texture;
+	// 		console.timeEnd('drawing text');
+	// 		state.renderer.render(state.stage);
+	// 	});
+	// });
 
 	let drawRender = document.getElementById('draw-render');
 	drawRender.addEventListener('mouseup', () => {
-		renderText4().then((textCanvas) => {
+		let fontSize = getFontSize();
+		renderText4(fontSize).then((textCanvas) => {
 			let texture = new PIXI.Texture.fromCanvas(textCanvas);
 			sprite.texture = texture;
 			console.timeEnd('drawing text');
@@ -79,7 +89,8 @@ rdy(function () {
 
 	let pathRender = document.getElementById('path-render');
 	pathRender.addEventListener('mouseup', () => {
-		renderText5().then((textCanvas) => {
+		let fontSize = getFontSize();
+		renderText5(fontSize).then((textCanvas) => {
 			let texture = new PIXI.Texture.fromCanvas(textCanvas);
 			sprite.texture = texture;
 			console.timeEnd('drawing text');

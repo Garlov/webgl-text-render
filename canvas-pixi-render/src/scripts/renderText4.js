@@ -33,7 +33,7 @@ const draw = (x, y, fontSize, unitsPerEm, commands, ctx) => {
     ctx.fill();
 }
 
-export default function renderText4() {
+export default function renderText4(fontSize) {
     return new Promise((resolve, reject) => {
         opentype.load('media/CaeciliaLTStd-Bold.otf', function (err, font) {
             if (err) {
@@ -51,10 +51,10 @@ export default function renderText4() {
                 console.time('drawing text');
 
                 //char position data
-                let lineHeight = 10;
                 let currLine = 1;
                 let charOnLine = 0;
-                let charSize = 10;
+                let lineHeight = fontSize;                
+                let charSize = fontSize;
 
                 //timers
                 let getPathTime = 0;
@@ -99,14 +99,14 @@ export default function renderText4() {
 
                     //draw character at x and y
                     t0 = performance.now();
-                    draw(x, y, 10, font.unitsPerEm, glyphCommands, ctx);
+                    draw(x, y, fontSize, font.unitsPerEm, glyphCommands, ctx);
                     t1 = performance.now();
                     drawOnCanvasTime += (t1 - t0);
 
                     charOnLine += 1;
 
                     //linebreak
-                    if (x + charSize > window.innerWidth) {
+                    if (x + charSize > canvas.width) {
                         currLine += 1;
                         charOnLine = 0;
                     }

@@ -1,7 +1,6 @@
 import text from './text';
 import opentype from 'opentype.js';
 
-let glyphCommandCache = new Map();
 let pathCache = [];
 
 const createPath2D = (fontSize, unitsPerEm, commands) => {
@@ -14,20 +13,20 @@ const createPath2D = (fontSize, unitsPerEm, commands) => {
         var cmd = commands[i];
         let cmdx = cmd.x * scale;
         let cmdy = -cmd.y * scale;
-        if (cmd.type === 0) {
+        if (cmd.type === 'M') {
             path.moveTo(cmdx, cmdy);
-        } else if (cmd.type === 1) {
+        } else if (cmd.type === 'L') {
             path.lineTo(cmdx, cmdy);
-        } else if (cmd.type === 2) {
+        } else if (cmd.type === 'C') {
             path.bezierCurveTo(
                 (cmd.x1 * scale), (-cmd.y1 * scale),
                 (cmd.x2 * scale), (-cmd.y2 * scale),
                 cmdx, cmdy);
-        } else if (cmd.type === 3) {
+        } else if (cmd.type === 'Q') {
             path.quadraticCurveTo(
                 (cmd.x1 * scale), (-cmd.y1 * scale),
                 cmdx, cmdy);
-        } else if (cmd.type === 4) {
+        } else if (cmd.type === 'Z') {
             path.closePath();
         }
     }
@@ -35,7 +34,7 @@ const createPath2D = (fontSize, unitsPerEm, commands) => {
     return path;
 }
 
-export default function renderText4() {
+export default function renderText4(fontSize) {
     return new Promise((resolve, reject) => {
         opentype.load('media/CaeciliaLTStd-Bold.otf', function (err, font) {
             if (err) {
@@ -54,10 +53,10 @@ export default function renderText4() {
                 console.time('drawing text');
 
                 //char position data
-                let lineHeight = 10;
                 let currLine = 1;
                 let charOnLine = 0;
-                let charSize = 10;
+                let charSize = 1;
+                let lineHeight = 1;
 
                 //timers
                 let getPathTime = 0;
@@ -66,7 +65,8 @@ export default function renderText4() {
 
                 let notdef = font.glyphs.get(0);
 
-                // Initial translate
+                // Initial context setup
+                ctx.scale(fontSize, fontSize);
                 ctx.translate(0, lineHeight);
 
                 //loop over chars and draw them
@@ -76,35 +76,16 @@ export default function renderText4() {
                     //get path commands from opentype
                     let t0 = performance.now();
                     let glyphIndex = font.charToGlyphIndex(c);
-                    let glyphCommands = glyphCommandCache.get(glyphIndex);
-                    if (!glyphCommands) {
+                    let path = pathCache[glyphIndex];
+                    if (!path) {
                         let glyph = font.glyphs.get(glyphIndex) || notdef;
-                        glyphCommands = glyph.path.commands;
-                        for (let i = 0; i < glyphCommands.length; i++) {
-                            let c = glyphCommands[i];
-                            if (c.type === 'M') {
-                                c.type = 0;
-                            } else if (c.type === 'L') {
-                                c.type = 1;
-                            } else if (c.type === 'C') {
-                                c.type = 2;
-                            } else if (c.type === 'Q') {
-                                c.type = 3;
-                            } else if (c.type === 'Z') {
-                                c.type = 4;
-                            }
-                        }
-                        glyphCommandCache.set(glyphIndex, glyphCommands);
+                        
+                        // Create Path2D element
+                        path = createPath2D(1, font.unitsPerEm, glyph.path.commands);
+                        pathCache[glyphIndex] = path;
                     }
                     let t1 = performance.now();
                     getPathTime += (t1 - t0);
-
-                    // Create Path2D element
-                    let path = pathCache[glyphIndex];
-                    if (!path) {
-                        path = createPath2D(10, font.unitsPerEm, glyphCommands);
-                        pathCache[glyphIndex] = path;
-                    }
 
                     // Draw to context and translate path
                     t0 = performance.now();
@@ -119,12 +100,13 @@ export default function renderText4() {
 
                     //linebreak
                     let x = charOnLine * charSize;
-                    if (x + charSize > window.innerWidth) {
+                    if (x > canvas.width / fontSize) {
                         currLine += 1;
                         charOnLine = 0;
 
                         // Reset transfor matrix
                         ctx.setTransform(1, 0, 0, 1, 0, 0);
+                        ctx.scale(fontSize, fontSize);
 
                         // Translate to next line
                         ctx.translate(0, currLine * lineHeight);
