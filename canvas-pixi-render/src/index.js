@@ -30,7 +30,7 @@ const animate = () => {
 
 rdy(function () {
 	state = setup();
-	animate();
+	// animate();
 
 	let sprite = new PIXI.Sprite();
 	state.stage.addChild(sprite);
@@ -43,6 +43,7 @@ rdy(function () {
 			let texture = new PIXI.Texture.fromCanvas(textCanvas);
 			sprite.texture = texture;
 			console.timeEnd('drawing text');
+			state.renderer.render(state.stage);
 		});
 	});
 
@@ -52,6 +53,7 @@ rdy(function () {
 			let texture = new PIXI.Texture.fromCanvas(textCanvas);
 			sprite.texture = texture;
 			console.timeEnd('drawing text');
+			state.renderer.render(state.stage);
 		});
 	});
 
@@ -61,6 +63,7 @@ rdy(function () {
 			let texture = new PIXI.Texture.fromCanvas(textCanvas);
 			sprite.texture = texture;
 			console.timeEnd('drawing text');
+			state.renderer.render(state.stage);
 		});
 	});
 
@@ -70,6 +73,7 @@ rdy(function () {
 			let texture = new PIXI.Texture.fromCanvas(textCanvas);
 			sprite.texture = texture;
 			console.timeEnd('drawing text');
+			state.renderer.render(state.stage);
 		});
 	});
 
@@ -79,6 +83,7 @@ rdy(function () {
 			let texture = new PIXI.Texture.fromCanvas(textCanvas);
 			sprite.texture = texture;
 			console.timeEnd('drawing text');
+			state.renderer.render(state.stage);
 		});
 	});
 });

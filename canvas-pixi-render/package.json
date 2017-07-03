@@ -6,10 +6,12 @@
   "dependencies": {
     "browser-sync": "^2.17.5",
     "browserify": "^13.1.1",
-    "opentype.js": "^0.6.9",
+    "ctx-polyfill": "^1.1.3",
     "lodash.assign": "^4.2.0",
     "lodash.throttle": "^4.1.1",
-    "pixi.js": "4.5.1"
+    "opentype.js": "^0.6.9",
+    "pixi.js": "4.5.1",
+    "promise-polyfill": "^6.0.2"
   },
   "devDependencies": {
     "babel-preset-es2015": "^6.14.0",
